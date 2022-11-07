@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'rest_framework',
     #'django_filter',
     'users',
+    #'django.apps.management.commands.create_auto_user',
+    #'createsuperuser',
+    'management',
+
 ]
 
 MIDDLEWARE = [

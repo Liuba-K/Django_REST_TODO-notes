@@ -25,12 +25,10 @@ const UserList = ({users}) => {
             <th>
                 Last Name
             </th>
-            <th>
-                Birthday year
-            </th>
+
             {users.map((user) => <UserItem user={user} />)}
         </table>
     )
 }
 
-export default UserList
+export default UserList;

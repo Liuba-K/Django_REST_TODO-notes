@@ -1,6 +1,6 @@
 from django.db import models
 
-from web_service_with_TODO_notes.users.models import User
+from users.models import User #web_service_with_TODO_notes.users.models
 
 
 class Project(models.Model):

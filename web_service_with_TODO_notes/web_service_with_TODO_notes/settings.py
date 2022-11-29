@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     #'django_filter',
     'users',
     'corsheaders',
+    'todo',
 ]
 
 MIDDLEWARE = [

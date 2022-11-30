@@ -1,10 +1,11 @@
 #from rest_framework.relations import StringRelatedField
-from rest_framework.serializers import ModelSerializer, StringRelatedField
+from rest_framework.serializers import HyperlinkedModelSerializer
 from .models import Project, Todo
+#from ..users.serializers import UserModelSerializer
 
 
-class ProjectModelSerializer(ModelSerializer):
-    users = StringRelatedField(many=True) #user будет представлен методом __str__ в модели Author,
+class ProjectModelSerializer(HyperlinkedModelSerializer):
+    #users = StringRelatedField(many=True) #user будет представлен методом __str__ в модели Author,
     # а ключ many=True позволяет выводить несколько пользователей.
 
     class Meta:
@@ -12,7 +13,10 @@ class ProjectModelSerializer(ModelSerializer):
         fields = '__all__'
 
 
-class TodoModelSerializer(ModelSerializer):
+class TodoModelSerializer(HyperlinkedModelSerializer):
+    #user = UserModelSerializer(many=True)
+    #users = StringRelatedField(many=True)
+
     class Meta:
         model = Todo
         fields = '__all__'

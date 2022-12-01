@@ -20,8 +20,8 @@ from rest_framework.routers import DefaultRouter
 #from users.views import UserModelViewSet
 #from todo.views import TodoModelViewSet, ProjectModelViewSet
 
-from todo.views import TodoAPIView, ProjecAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter
-from users.views import UserAPIView
+from todo.views import TodoAPIView, ProjectAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter
+from users.views import UserAPIView, UserListAPIView
 
 
 router = DefaultRouter()
@@ -37,8 +37,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api', include(router.urls)),
-    path('api/users/', UserAPIView.as_view()),
+    path('api/user/<int:id>', UserAPIView.as_view()), #конкретная переменная
+    path('api/users/', UserListAPIView.as_view()),
     path('api/todo/', TodoAPIView.as_view()),
-    path('api/todo/', ProjectAPIView.as_view()),
+    path('api/project/', ProjectAPIView.as_view()),
 
 ]

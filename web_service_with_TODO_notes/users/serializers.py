@@ -6,3 +6,7 @@ class UserModelSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'firstname', 'lastname', 'email')
+"""
+    def create(self, validated_data):
+        return User(**validated_data)
+"""

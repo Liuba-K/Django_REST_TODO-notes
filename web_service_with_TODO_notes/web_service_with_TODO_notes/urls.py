@@ -20,7 +20,7 @@ from rest_framework.routers import DefaultRouter
 #from users.views import UserModelViewSet
 #from todo.views import TodoModelViewSet, ProjectModelViewSet
 
-from todo.views import TodoAPIView, ProjecAPIView, ProjectModelViewSetFilter
+from todo.views import TodoAPIView, ProjecAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter
 from users.views import UserAPIView
 
 
@@ -29,6 +29,9 @@ router = DefaultRouter()
 #router.register('todo', TodoModelViewSet)
 #router.register('project', ProjectModelViewSet)
 router.register('project_filter', ProjectModelViewSetFilter)
+router.register('project_filter', TodoModelViewSetFilter)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),

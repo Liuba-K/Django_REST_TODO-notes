@@ -1,4 +1,5 @@
-#from rest_framework.viewsets import ModelViewSet
+#from rest_framework.generics import ListAPIView
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Project, Todo
 from .serializers import ProjectModelSerializer, TodoModelSerializer
@@ -25,6 +26,19 @@ class ProjectAPIView(APIView):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
 
+
+#filter
+class ProjectModelViewSetFilter(ModelViewSet):
+    serializer_class = ProjectModelSerializer
+    #renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
+    queryset = Project.objects.all()
+
+    def get_queryset(self):
+        name = self.request.query_params('name', '')
+        project = Project.objects.all()
+        if name:
+            project = project.filter(name__contains=name)
+        return project
 
 class TodoAPIView(APIView):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]

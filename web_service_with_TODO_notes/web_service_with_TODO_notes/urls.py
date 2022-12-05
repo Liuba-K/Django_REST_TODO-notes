@@ -15,8 +15,33 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+
+#from users.views import UserModelViewSet
+#from todo.views import TodoModelViewSet, ProjectModelViewSet
+
+from todo.views import TodoAPIView, ProjectAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter, \
+    ProjectListAPIView, TodoListAPIView
+from users.views import UserAPIView, UserListAPIView
+
+
+router = DefaultRouter()
+#router.register('users', UserModelViewSet)
+#router.register('todo', TodoModelViewSet)
+#router.register('project', ProjectModelViewSet)
+router.register('project_filter', ProjectModelViewSetFilter)
+router.register('project_filter', TodoModelViewSetFilter)
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
+    path('api', include(router.urls)),
+    path('api/user/<int:id>', UserAPIView.as_view()), #конкретная переменная
+    path('api/users/', UserListAPIView.as_view()),
+    path('api/todos/', TodoListAPIView.as_view()),
+    path('api/todo/<int:id>', TodoAPIView.as_view()),
+    path('api/projects/', ProjectListAPIView.as_view()),
+    path('api/project/<int:id>', ProjectAPIView.as_view()),
 ]

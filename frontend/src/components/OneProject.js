@@ -1,11 +1,11 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 
 const ProjectItem = ({project}) => {
-    return (
+     return (
         <tr>
             <td>
-                <Link to={`project/${project.name_project}`}>{project.name_project}</Link>
+                {project.name_project}
             </td>
             <td>
                 {project.users}
@@ -14,7 +14,10 @@ const ProjectItem = ({project}) => {
     )
 }
 
-const ProjectsList = ({projects}) => {
+const ProjectList = ({projects}) => {
+    let {name_project} = useParams();
+    let filter_project = projects.filter((project)=> project.name_project === name_project);
+
     return (
         <table>
             <th>
@@ -23,9 +26,9 @@ const ProjectsList = ({projects}) => {
             <th>
                 User
             </th>
-            {projects.map((project) => <ProjectItem project={project} />)}
+            {filter_project.map((project) => <ProjectItem project={project} />)}
         </table>
     )
 }
 
-export default ProjectsList;
+export default ProjectList;

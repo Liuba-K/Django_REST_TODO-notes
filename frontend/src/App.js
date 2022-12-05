@@ -2,7 +2,8 @@ import axios from 'axios';
 import './App.css';
 import React from 'react';
 import UserList from './components/User.js';
-import ProjectList from './components/Project.js';
+import ProjectList from './components/OneProject.js';
+import ProjectsList from "./components/Project.js";
 import TodoList from './components/Todo.js';
 import Footer from './components/Footer.js';
 import Menu from './components/Menu.js';
@@ -49,7 +50,7 @@ class App extends React.Component {
     render(){
             return (
                 <div>
-
+                        <Menu />
                         <BrowserRouter>
                             <nav>
                                 <li>
@@ -62,15 +63,22 @@ class App extends React.Component {
                                     <Link to='/todos'>Todos</Link>
                                 </li>
                             </nav>
-                            <Menu />
+
                             <Routes>
+                                <Route exact path='/' element={<Navigate to='/projects'/>}/>
+                                <Route path = '/projects'>
+                                    <Route index element={<ProjectsList projects={this.state.projects} />}/>
+                                    <Route path='/projects/:name_project' element={<ProjectList projects={this.state.projects} />}/>
+                                 </Route>
                                 <Route exact path='/users' element={<UserList users={this.state.users} />}/>
-                                <Route exact path='/projects' element={<ProjectList projects={this.state.projects} />}/>
+
                                 <Route exact path='/todos' element={<TodoList todos={this.state.todos} />}/>
+
                                 <Route path='*' element={<NotFound404/>}/>
                             </Routes>
                         </BrowserRouter>
-                    <Footer />
+                        <Footer />
+
                  </div>
             )
         }

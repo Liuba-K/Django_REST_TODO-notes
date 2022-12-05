@@ -36,11 +36,9 @@ class ProjectAPIView(APIView):
 class ProjectListAPIView(APIView):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
 
-
     def get(self, request: Request, format=None)-> Response:
         #user_detail = UserViewSet.as_view({'get': 'retrieve'})
         projects = Project.objects.all()
-
         serializer = ProjectModelSerializer(projects, many=True)
         return Response(serializer.data)
 """
@@ -84,6 +82,14 @@ class TodoAPIView(APIView):
     def delete(self, request, format=None):
         return "closed"
     # при удалении не удалять ToDo, а выставлять признак, что оно закрыто;
+
+class TodoListAPIView(APIView):
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
+
+    def get(self, request: Request, format=None)-> Response:
+        todos = Todo.objects.all()
+        serializer = TodoModelSerializer(todos, many=True)
+        return Response(serializer.data)
 
 #paginator
 class TodotLimitOffsetPagination(LimitOffsetPagination):

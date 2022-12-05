@@ -6,6 +6,7 @@ import ProjectList from './components/Project.js';
 import TodoList from './components/Todo.js';
 import Footer from './components/Footer.js';
 import Menu from './components/Menu.js';
+import NotFound404 from './components/NotFound404';
 import {BrowserRouter,Route,Routes,Link,Navigate} from 'react-router-dom';
 
 
@@ -27,6 +28,23 @@ class App extends React.Component {
                     }
                 )
         }).catch(error => console.log(error))
+
+        axios.get('http://127.0.0.1:8000/api/projects/').then(response => {
+                this.setState(
+                    {
+                        'projects': response.data
+                    }
+                )
+        }).catch(error => console.log(error))
+
+         axios.get('http://127.0.0.1:8000/api/todos/').then(response => {
+                this.setState(
+                    {
+                        'todos': response.data
+                    }
+                )
+        }).catch(error => console.log(error))
+
     }
     render(){
             return (
@@ -49,6 +67,7 @@ class App extends React.Component {
                                 <Route exact path='/users' element={<UserList users={this.state.users} />}/>
                                 <Route exact path='/projects' element={<ProjectList projects={this.state.projects} />}/>
                                 <Route exact path='/todos' element={<TodoList todos={this.state.todos} />}/>
+                                <Route path='*' element={<NotFound404/>}/>
                             </Routes>
                         </BrowserRouter>
                     <Footer />

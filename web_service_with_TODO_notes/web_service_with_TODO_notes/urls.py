@@ -21,7 +21,7 @@ from rest_framework.routers import DefaultRouter
 #from todo.views import TodoModelViewSet, ProjectModelViewSet
 
 from todo.views import TodoAPIView, ProjectAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter, \
-    ProjectListAPIView
+    ProjectListAPIView, TodoListAPIView
 from users.views import UserAPIView, UserListAPIView
 
 
@@ -40,8 +40,8 @@ urlpatterns = [
     path('api', include(router.urls)),
     path('api/user/<int:id>', UserAPIView.as_view()), #конкретная переменная
     path('api/users/', UserListAPIView.as_view()),
-    path('api/todo/', TodoAPIView.as_view()),
-    path('api/project/', ProjectAPIView.as_view()),
-    path('api/project/<int:id>', ProjectListAPIView.as_view()),
-
+    path('api/todos/', TodoListAPIView.as_view()),
+    path('api/todo/<int:id>', TodoAPIView.as_view()),
+    path('api/projects/', ProjectListAPIView.as_view()),
+    path('api/project/<int:id>', ProjectAPIView.as_view()),
 ]

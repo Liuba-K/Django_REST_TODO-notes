@@ -10,6 +10,7 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+
 class Todo(models.Model):
     text = models.CharField(max_length=32)
     user = models.ForeignKey(User, models.PROTECT) # точно?

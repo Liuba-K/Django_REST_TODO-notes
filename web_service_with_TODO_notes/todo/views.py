@@ -1,5 +1,6 @@
 #from rest_framework.generics import ListAPIView
 from rest_framework.pagination import LimitOffsetPagination
+from rest_framework.request import Request
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Project, Todo
@@ -8,13 +9,14 @@ from .serializers import ProjectModelSerializer, TodoModelSerializer
 
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
-
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 """
 class TodoModelViewSet(ModelViewSet):
     queryset = Todo.objects.all() #почему  objects загорелся?
     serializer_class = TodoModelSerializer
-
+    renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
+    
 
 class ProjectModelViewSet(ModelViewSet):
     queryset = Project.objects.all() #точно all?
@@ -41,7 +43,7 @@ class ProjectListAPIView(APIView):
         projects = Project.objects.all()
         serializer = ProjectModelSerializer(projects, many=True)
         return Response(serializer.data)
-"""
+
     def post(self, request, format=None):
         serializer = UserModelSerializer(data=request.data)
         if serializer.is_valid():
@@ -49,7 +51,7 @@ class ProjectListAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-"""
+
 #paginator
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
     default_limit = 10

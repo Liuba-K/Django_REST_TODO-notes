@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'users',
     'corsheaders',
     'todo',
+    'rest_framework.authtoken'
 ]
 
 MIDDLEWARE = [
@@ -144,5 +145,9 @@ REST_FRAMEWORK = {
     #'PAGE_SIZE':100
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication'
+    ],
 }

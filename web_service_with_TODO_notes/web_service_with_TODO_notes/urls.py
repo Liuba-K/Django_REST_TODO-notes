@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 
 #from users.views import UserModelViewSet
 #from todo.views import TodoModelViewSet, ProjectModelViewSet
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from todo.views import TodoAPIView, ProjectAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter, \
     ProjectListAPIView, TodoListAPIView
@@ -40,6 +41,9 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('api', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token),
+
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh', TokenRefreshView.as_view(), name='token_refresh'),
 
     path('api/user/<int:id>', UserAPIView.as_view()), #конкретная переменная
     path('api/users/', UserListAPIView.as_view()),

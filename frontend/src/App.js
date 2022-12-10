@@ -1,13 +1,17 @@
 import axios from 'axios';
 import './App.css';
 import React from 'react';
+
 import UserList from './components/User.js';
 import ProjectList from './components/OneProject.js';
 import ProjectsList from "./components/Project.js";
 import TodoList from './components/Todo.js';
+
 import Footer from './components/Footer.js';
 import Menu from './components/Menu.js';
 import NotFound404 from './components/NotFound404';
+
+import LoginForm from './components/Auth';
 import {BrowserRouter,Route,Routes,Link,Navigate} from 'react-router-dom';
 
 
@@ -19,6 +23,34 @@ class App extends React.Component {
             'projects': [],
             'todos' : [],
         }
+    }
+
+    logout(){
+
+    }
+
+    is_auth(){
+
+    }
+
+    set_token(token){
+
+    }
+
+    get_token_storage(){
+
+    }
+
+    get_token(username, password){
+        console.log(username,password)
+
+    }
+
+    get_headers(){
+    }
+
+    load_data(){
+
     }
 
     componentDidMount() {
@@ -62,6 +94,9 @@ class App extends React.Component {
                                 <li>
                                     <Link to='/todos'>Todos</Link>
                                 </li>
+                                <li>
+                                    <Link to='/login'>Login</Link>
+                                </li>
                             </nav>
 
                             <Routes>
@@ -73,6 +108,9 @@ class App extends React.Component {
                                 <Route exact path='/users' element={<UserList users={this.state.users} />}/>
 
                                 <Route exact path='/todos' element={<TodoList todos={this.state.todos} />}/>
+
+                                <Route exact path='/login' element={<LoginForm get_token={(username,password) =>
+                                this.get_token(username,password)} />}/>
 
                                 <Route path='*' element={<NotFound404/>}/>
                             </Routes>

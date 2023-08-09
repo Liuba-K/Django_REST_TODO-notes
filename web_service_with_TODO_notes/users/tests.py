@@ -4,7 +4,7 @@ from rest_framework import status
 #status это константы коды для всех ответов http
 from rest_framework.test import APIRequestFactory, force_authenticate, APIClient, APISimpleTestCase,APITestCase
 from django.contrib.auth.models import User
-from .views import UserAPIView, UserModelSerializer,UserListAPIView
+from .views import UserAPIView, UserModelSerializer, UserListAPIView
 from .models import User
 
 

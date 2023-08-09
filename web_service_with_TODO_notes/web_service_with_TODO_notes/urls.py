@@ -23,7 +23,7 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from todo.views import TodoAPIView, ProjectAPIView, ProjectModelViewSetFilter, TodoModelViewSetFilter, \
-    ProjectListAPIView, TodoListAPIView
+    ProjectListAPIView, TodoListAPIView, ProjectDjangoFilterViewSet
 from users.views import UserAPIView, UserListAPIView
 
 
@@ -32,6 +32,7 @@ router = DefaultRouter()
 #router.register('todo', TodoModelViewSet)
 #router.register('project', ProjectModelViewSet)
 router.register('project_filter', ProjectModelViewSetFilter)
+router.register('project_filter', ProjectDjangoFilterViewSet)
 router.register('project_filter', TodoModelViewSetFilter)
 
 

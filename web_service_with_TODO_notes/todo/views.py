@@ -1,8 +1,10 @@
 #from rest_framework.generics import ListAPIView
+from rest_framework import status
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.request import Request
 from rest_framework.viewsets import ModelViewSet
 
+from users.serializers import UserModelSerializer
 from .models import Project, Todo
 from .serializers import ProjectModelSerializer, TodoModelSerializer
 
@@ -31,8 +33,15 @@ class ProjectAPIView(APIView):
 
     def get(self, request: Request, id, format=None)-> Response:
         project = Project.objects.get(id=id)
-        serializer = ProjectModelSerializer(project)
+
+        # id = request.query_params.get('id')
+        # project = Project.objects.all()
+        # if id:
+            #project = Project.filter(id=id)
+
+        serializer = ProjectModelSerializer(project)  # ,many=True
         return Response(serializer.data)
+
 
 
 class ProjectListAPIView(APIView):
@@ -71,6 +80,14 @@ class ProjectModelViewSetFilter(ModelViewSet):
             project = project.filter(name__contains=name)
         return project
 
+#new filter django
+class ProjectDjangoFilterViewSet(ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectModelSerializer
+    filterset_fields = ['name_project', 'users']
+    #filterset_class = ProjecrFilter
+
+
 class TodoAPIView(APIView):
     renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     #queryset = Todo.objects.all()
@@ -78,6 +95,12 @@ class TodoAPIView(APIView):
 
     def get(self, request, format=None):
         queryset = Todo.objects.all()
+        id = request.query_params.get('id')
+
+        if id:
+            queryset = Todo.filter(id=id)
+
+
         serializer = TodoModelSerializer(queryset, many=True)
         return Response(serializer.data)
 

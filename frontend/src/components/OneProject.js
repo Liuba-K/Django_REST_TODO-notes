@@ -16,8 +16,9 @@ const ProjectItem = ({project}) => {
 
 const ProjectList = ({projects}) => {
     let {name_project} = useParams();
+    console.log(name_project)
     let filter_project = projects.filter((project)=> project.name_project === name_project);
-
+    //let filter_project = projects.filter((project)=> project.name_project === name_project);
     return (
         <table>
             <th>

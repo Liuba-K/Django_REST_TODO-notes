@@ -84,7 +84,7 @@ class ProjectModelViewSetFilter(ModelViewSet):
 class ProjectDjangoFilterViewSet(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
-    filterset_fields = ['name_project', 'users']
+    filterset_fields = ['name_project']
     #filterset_class = ProjecrFilter
 
 

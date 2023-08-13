@@ -64,6 +64,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'web_service_with_TODO_notes.urls'
+#can changed
 
 TEMPLATES = [
     {

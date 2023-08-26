@@ -32,10 +32,10 @@ class ProjectAPIView(APIView):
     #serializer_class = ProjectModelSerializer
 
     def get(self, request: Request, id, format=None)-> Response:
-        project = Project.objects.get(id=id)
+        #project = Project.objects.get(id=id)
 
         # id = request.query_params.get('id')
-        # project = Project.objects.all()
+        project = Project.objects.all()
         # if id:
             #project = Project.filter(id=id)
 

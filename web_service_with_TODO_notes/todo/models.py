@@ -8,7 +8,7 @@ class Project(models.Model):
     users = models.ManyToManyField(User)
 
     def __str__(self):
-        return self.name
+        return self.name  #name_project
 
 
 class Todo(models.Model):

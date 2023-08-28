@@ -51,4 +51,22 @@ class Query(graphene.ObjectType):
     def resolve_all_users(root, info): #allUsers
         return User.objects.all()
 
-schema = graphene.Schema(query=Query)
+class TodoMutation(graphene.Mutation):
+    class Arguments:
+        text = graphene.Int(required=True)
+        user = graphene.ID()
+    todo = graphene.Field(TodoType)
+
+    @classmethod
+    def mutate(cls, root, text, user):
+        todo = Todo.objects.get(pk=id)
+        todo.text = text
+        todo.save()
+        return TodoMutation(todo=todo)
+
+class Mutation(graphene.ObjectType):
+    update_todo = TodoMutation.Field()
+
+
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

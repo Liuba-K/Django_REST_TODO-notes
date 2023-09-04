@@ -12,6 +12,9 @@ const UserItem = ({user}) => {
             <td>
                 {user.birthday_year}
             </td>
+            <td>
+                {user.username}
+            </td>
         </tr>
     )
 }
@@ -24,6 +27,9 @@ const UserList = ({users}) => {
             </th>
             <th>
                 Last Name
+            </th>
+            <th>
+                Username
             </th>
 
             {users.map((user) => <UserItem user={user} />)}

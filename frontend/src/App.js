@@ -12,6 +12,8 @@ import Menu from './components/Menu.js';
 import NotFound404 from './components/NotFound404';
 
 import LoginForm from './components/Auth';
+import todos from "./components/Todo";
+import TodoForm from "./components/TodoForm";
 import {BrowserRouter,Route,Routes,Link,Navigate} from 'react-router-dom';
 
 import Cookies from 'universal-cookie';
@@ -26,6 +28,31 @@ class App extends React.Component {
             'todos': [],
             'token':'',
         }
+    }
+
+    create_todo(text, users){
+        const headers = this.get_headers()
+        const data = {text: text, users: users}
+        axios.post(`http://127.0.0.1:8000/api/todos/`, data, {headers}).then(response => {
+            this.load_data()
+        }).catch(error => {
+            console.log(error)
+            this.setState({todos:[]})
+            })
+    }
+
+    delete_todo(user){
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/todos/${user}`, {headers}).then(response => {
+            //this.setState(
+            //    {
+            //    'todos': response.data
+            //    }
+            //)
+            this.load_data()
+        }).catch(error => {
+            console.log(error)
+            this.setState({todos:[]})})
     }
 
     logout(){
@@ -77,7 +104,7 @@ class App extends React.Component {
     load_data(){
     //}
     //componentDidMount() {
-        const headers =this.get_headers() //!!внимательно
+        const headers = this.get_headers() //!!внимательно
         axios.get('http://127.0.0.1:8000/api/users/', {headers}).then(response => {
                 this.setState(
                     {
@@ -135,7 +162,10 @@ class App extends React.Component {
                                  </Route>
                                 <Route exact path='/users' element={<UserList users={this.state.users} />}/>
 
-                                <Route exact path='/todos' element={<TodoList todos={this.state.todos} />}/>
+                                <Route exact path='/todos' element={<TodoList todos={this.state.todos}  delete_todo={(user)=>this.delete_todo(user)}/>}/>
+                                <Route exact path='/todos/create'
+                                    element={<TodoForm todos={this.state.todos}
+                                        create_todo={(text, users)=>this.create_todo(text, users)}/>}/>
 
                                 <Route exact path='/login' element={<LoginForm get_token={(username,password) =>
                                 this.get_token(username,password)} />}/>

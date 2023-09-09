@@ -4,7 +4,7 @@ import React from 'react';
 
 import UserList from './components/User.js';
 import ProjectList from './components/OneProject.js';
-import ProjectsList from "./components/Project.js";
+import ProjectsList from './components/Project.js';
 import TodoList from './components/Todo.js';
 
 import Footer from './components/Footer.js';
@@ -12,8 +12,13 @@ import Menu from './components/Menu.js';
 import NotFound404 from './components/NotFound404';
 
 import LoginForm from './components/Auth';
-import todos from "./components/Todo";
-import TodoForm from "./components/TodoForm";
+
+
+import TodoForm from './components/TodoForm';
+
+//import projects from './components/Project';
+import ProjectForm from './components/ProjectForm';
+
 import {BrowserRouter,Route,Routes,Link,Navigate} from 'react-router-dom';
 
 import Cookies from 'universal-cookie';
@@ -33,7 +38,7 @@ class App extends React.Component {
     create_todo(text, users){
         const headers = this.get_headers()
         const data = {text: text, users: users}
-        axios.post(`http://127.0.0.1:8000/api/todos/`, data, {headers}).then(response => {
+        axios.post('http://127.0.0.1:8000/api/todos/', data, {headers}).then(response => {
             this.load_data()
         }).catch(error => {
             console.log(error)
@@ -43,7 +48,7 @@ class App extends React.Component {
 
     delete_todo(user){
         const headers = this.get_headers()
-        axios.delete(`http://127.0.0.1:8000/api/todos/${user}`, {headers}).then(response => {
+        axios.delete(`http://127.0.0.1:8000/api/todos/${user}/`, {headers}).then(response => {
             //this.setState(
             //    {
             //    'todos': response.data
@@ -53,6 +58,30 @@ class App extends React.Component {
         }).catch(error => {
             console.log(error)
             this.setState({todos:[]})})
+    }
+    create_project(name_project, users){
+        const headers = this.get_headers()
+        const data = {name_project: name_project, users: users}
+        axios.post(`http://127.0.0.1:8000/api/projects/`, data, {headers}).then(response => {
+            this.load_data()
+        }).catch(error => {
+            console.log(error)
+            this.setState({projects:[]})
+            })
+    }
+
+
+
+
+    delete_project(name_project){
+        const headers = this.get_headers()
+        axios.delete(`http://127.0.0.1:8000/api/projects/${name_project}/`, {headers})
+            .then(response => {
+                this.setState({projects: this.state.projects.filter((project)=>project.name_project !== name_project)})
+            }).catch(error => {
+                console.log(error)
+                this.setState({projects:[]})
+            })
     }
 
     logout(){
@@ -83,7 +112,7 @@ class App extends React.Component {
 
     get_token(username, password){
         const data = {username:username,password:password}
-        axios.post('http://127.0.0.1:8000/api-token-auth/',data).then(response => {
+        axios.post(`http://127.0.0.1:8000/api-token-auth/`,data).then(response => {
             this.set_token(response.data['token'])
         }).catch(error => alert('Неверный логин или пароль'))
 
@@ -159,7 +188,13 @@ class App extends React.Component {
                                 <Route path = '/projects'>
                                     <Route index element={<ProjectsList projects={this.state.projects} />}/>
                                     <Route path='/projects/:name_project' element={<ProjectList projects={this.state.projects} />}/>
-                                 </Route>
+                                </Route>
+                                <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} deleteProject={(name_project)=>this.deleteProject(name_project)} />} />
+                                <Route exact path='/projects/create'
+                                    element={<ProjectForm projects={this.state.projects}
+                                        create_project={(name_project, users)=>this.create_project(name_project, users)}/>}/>
+
+
                                 <Route exact path='/users' element={<UserList users={this.state.users} />}/>
 
                                 <Route exact path='/todos' element={<TodoList todos={this.state.todos}  delete_todo={(user)=>this.delete_todo(user)}/>}/>

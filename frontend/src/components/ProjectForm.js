@@ -1,10 +1,11 @@
-import React from "react";
+import React from 'react';
 
-class TodoForm extends React.Component {
+
+class ProjectForm extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {text: '', user: ''}
+        this.state = {name_project: '', users: []}
     }
 
     handleChange(event){
@@ -18,21 +19,21 @@ class TodoForm extends React.Component {
     handleUserChange(event){
         if(!event.target.selectedOptions) {
         this.setState({
-            'user':[]
+            'users':[]
             })
             return;
         }
-        let user = []
+        let users = []
         for(let i = 0; i < event.target.selectedOptions.length; i++){
-            user.push(event.target.selectedOptions.item(i).value)
+            users.push(event.target.selectedOptions.item(i).value)
         }
         this.setState(
-            {'user':user}
+            {'users':users}
         )
     }
 
     handleSubmit(event){
-        this.props.create_todo(this.state.text, this.state.user)
+        this.props.create_project(this.state.text, this.state.user)
         event.preventDefault()
     }
 
@@ -46,7 +47,7 @@ class TodoForm extends React.Component {
                         onChange={(event)=>this.handleChange(event)} />
                   </div>
                   <select name="user" multiple onChange={(event) => this.handleUserChange(event)}>
-                    {this.props.todos.map((item)=> <option value={item.id}>{item.first_name}</option>)}
+                    {this.props.projects.map((item)=> <option value={item.id}>{item.first_name}</option>)}
                   </select>
 
                 <input type="submit" value="Save" />
@@ -55,4 +56,4 @@ class TodoForm extends React.Component {
     }
 
 }
-export default TodoForm
+export default ProjectForm;

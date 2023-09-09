@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TodoItem = ({todo,delete_todo}) => {
+const TodoItem = ({todo, delete_todo}) => {
     return (
         <tr>
             <td>

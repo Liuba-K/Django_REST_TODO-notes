@@ -41,7 +41,7 @@ schema_view = get_schema_view(
 
     ),
     public=True,
-    permission_classes=[permissions.AllowAny], #права на документацию.
+    permission_classes=[permissions.AllowAny], #права на документацию.IsAuthenticated
 
 )
 
